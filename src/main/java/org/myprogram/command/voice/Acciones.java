@@ -5,42 +5,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import javax.speech.recognition.Recognizer;
-import javax.speech.recognition.Result;
-import javax.speech.recognition.ResultAdapter;
-import javax.speech.recognition.ResultEvent;
-import javax.speech.recognition.ResultToken;
-
 import org.jrichardsz.poc.jsapi.Lee;
 
-public class Programas extends ResultAdapter {
-	static Recognizer oreja;
-	String Programa;
+public class Acciones {
 
-	public void resultAccepted(ResultEvent e) {
-		Result res = (Result) (e.getSource());
-		ResultToken tokens[] = res.getBestTokens();
-		String Frase[] = new String[1];
-		Frase[0] = "";
-
-		for (int i = 0; i < tokens.length; i++) {
-			Programa = tokens[i].getSpokenText();
-			Frase[0] += Programa + " ";
-			System.out.print(Programa + " ");
-		}
-		System.out.println();
-        try {
-			this.elegirAccion(Programa);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-	}
-
-
+	
 	public void elegirAccion(String programa) throws IOException {
+		System.out.println("Imprimiendo accion:::::" + programa);
 		Process p = null;
 		switch (programa) {
-		case "Facebook":
+		case "por":
 			System.out.println(Lee.hablar("Abriendo Facebook..."));
 			p = Runtime.getRuntime().exec("cmd.exe /c start Chrome www.facebook.com");
 			this.prepareCommand(p);
@@ -55,9 +29,9 @@ public class Programas extends ResultAdapter {
 			p = Runtime.getRuntime().exec("cmd.exe /c start Chrome");
 			this.prepareCommand(p);
 			break;
-		case "YouTube":
+		case "Abre por":
 			System.out.println(Lee.hablar("Abriendo YouTube..."));
-			p = Runtime.getRuntime().exec("cmd.exe /c start www.youtube.com");
+			p = Runtime.getRuntime().exec("cmd.exe /c Chrome start www.youtube.com");
 			this.prepareCommand(p);
 			break;
 		case "Paint":
@@ -71,7 +45,7 @@ public class Programas extends ResultAdapter {
 			break;
 		}
 	}
-
+	
 	public void prepareCommand(Process p) {
 		try {
 			// Se obtiene el stream de salida del programa
