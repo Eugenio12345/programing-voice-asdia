@@ -1,145 +1,91 @@
 package org.myprogram.command.voice;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import javax.speech.AudioException;
+import javax.speech.EngineStateError;
 import javax.speech.recognition.Recognizer;
 import javax.speech.recognition.Result;
 import javax.speech.recognition.ResultAdapter;
 import javax.speech.recognition.ResultEvent;
-import javax.speech.recognition.ResultToken; 
+import javax.speech.recognition.ResultToken;
+
+import org.jrichardsz.poc.jsapi.Lee;
 
 public class Programas extends ResultAdapter {
 	static Recognizer oreja;
 	String Programa;
- 
-	public void resultAccepted(ResultEvent e){
-		try {
-			Result res = (Result)(e.getSource());
-			ResultToken tokens[] = res.getBestTokens();
-			String Frase[]= new String[1];
-			Frase[0]="";
 
-			for (int i=0; i < tokens.length; i++){
-				Programa = tokens[i].getSpokenText();
-				Frase[0]+=Programa+" "; 
-				System.out.print(Programa + " ");
-			}
-			System.out.println();
-			
-			if(Programa.equals("Fin")){
-				oreja.deallocate();
-				Frase[0]="Hasta la proxima!";
-				System.out.println(Frase[0]);
-				System.exit(0);
-			}
-			else if(Programa.equals("Facebook")) {
-				try { 
-					System.out.println("Abriendo Facebook...");
-					// Se lanza el ejecutable. 
-					Process p=Runtime.getRuntime().exec ("cmd.exe /c start Chrome www.facebook.com"); 
-             
-					// Se obtiene el stream de salida del programa 
-					InputStream is = p.getInputStream(); 
-             
-					/* Se prepara un bufferedReader para poder leer la salida más comodamente. */ 
-					BufferedReader br = new BufferedReader (new InputStreamReader (is)); 
-             
-					// Se lee la primera linea 
-					String aux = br.readLine(); 
-            
-				    while (aux!=null) { 
-						System.out.println (aux); 
-						aux = br.readLine(); 
-					} 
-				} catch (Exception es) { 
-					es.printStackTrace(); 
-				} 
-			}
+	public void resultAccepted(ResultEvent e) {
+		Result res = (Result) (e.getSource());
+		ResultToken tokens[] = res.getBestTokens();
+		String Frase[] = new String[1];
+		Frase[0] = "";
 
-			else if(Programa.equals("Reproductor")){
-				try { 
-					System.out.println("Abriendo Windows Media Player...");
-					// Se lanza el ejecutable. 
-					Process p=Runtime.getRuntime().exec ("cmd.exe /c start wmplayer"); 
-             
-					// Se obtiene el stream de salida del programa 
-					InputStream is = p.getInputStream(); 
-             
-					/* Se prepara un bufferedReader para poder leer la salida más comodamente. */ 
-					BufferedReader br = new BufferedReader (new InputStreamReader (is)); 
-             
-					// Se lee la primera linea 
-					String aux = br.readLine(); 
-            
-				    while (aux!=null) { 
-						System.out.println (aux); 
-						aux = br.readLine(); 
-					} 
-				} catch (Exception es) { 
-					es.printStackTrace(); 
-				} 
-			}
-
-			else if(Programa.equals("Chrome")){
-				try { 
-					System.out.println("Abriendo Chrome...");
-					// Se lanza el ejecutable. 
-					Process p=Runtime.getRuntime().exec ("cmd.exe /c start Chrome"); 
-             
-					// Se obtiene el stream de salida del programa 
-					InputStream is = p.getInputStream(); 
-             
-					/* Se prepara un bufferedReader para poder leer la salida más comodamente. */ 
-					BufferedReader br = new BufferedReader (new InputStreamReader (is)); 
-             
-					// Se lee la primera linea 
-					String aux = br.readLine(); 
-            
-				    while (aux!=null) { 
-						System.out.println (aux); 
-						aux = br.readLine(); 
-					} 
-				} catch (Exception es) { 
-					es.printStackTrace(); 
-				} 
-			}
-
-			else if(Programa.equals("Paint")){
-				try { 
-					System.out.println("Abriendo Paint Brush...");
-					// Se lanza el ejecutable. 
-					Process p=Runtime.getRuntime().exec ("cmd.exe /c start pbrush"); 
-             
-					// Se obtiene el stream de salida del programa 
-					InputStream is = p.getInputStream(); 
-             
-					/* Se prepara un bufferedReader para poder leer la salida más comodamente. */ 
-					BufferedReader br = new BufferedReader (new InputStreamReader (is)); 
-             
-					// Se lee la primera linea 
-					String aux = br.readLine(); 
-            
-				    while (aux!=null) { 
-						System.out.println (aux); 
-						aux = br.readLine(); 
-					} 
-				} catch (Exception es) { 
-					es.printStackTrace(); 
-				} 
-			}
-
-			else {
-				getPrograma();
-				oreja.suspend();
-				oreja.resume();
-			}
-		}catch(Exception ex) {
+		for (int i = 0; i < tokens.length; i++) {
+			Programa = tokens[i].getSpokenText();
+			Frase[0] += Programa + " ";
+			System.out.print(Programa + " ");
+		}
+		System.out.println();
+        try {
+			this.elegirAccion(Programa);
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 	}
 
-	public String getPrograma(){
-		return Programa;
+
+	public void elegirAccion(String programa) throws IOException {
+		Process p = null;
+		switch (programa) {
+		case "Facebook":
+			System.out.println(Lee.hablar("Abriendo Facebook..."));
+			p = Runtime.getRuntime().exec("cmd.exe /c start Chrome www.facebook.com");
+			this.prepareCommand(p);
+			break;
+		case "Reproductor":
+			System.out.println("Abriendo Windows Media Player...");
+			p = Runtime.getRuntime().exec("cmd.exe /c start wmplayer");
+			this.prepareCommand(p);
+			break;
+		case "Chrome":
+			System.out.println("Abriendo Chrome...");
+			p = Runtime.getRuntime().exec("cmd.exe /c start Chrome");
+			this.prepareCommand(p);
+			break;
+		case "Paint":
+			System.out.println("Abriendo Paint Brush...");
+			// Se lanza el ejecutable.
+			p = Runtime.getRuntime().exec("cmd.exe /c start pbrush");
+			this.prepareCommand(p);
+			break;
+		default:
+			Lee.hablar("No he recibido ninguna instruccion");
+			break;
+		}
+	}
+
+	public void prepareCommand(Process p) {
+		try {
+			// Se obtiene el stream de salida del programa
+			InputStream is = p.getInputStream();
+			/*
+			 * Se prepara un bufferedReader para poder leer la salida más
+			 * comodamente.
+			 */
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			// Se lee la primera linea
+			String aux = br.readLine();
+			while (aux != null) {
+				System.out.println(aux);
+				aux = br.readLine();
+			}
+		} catch (Exception es) {
+			es.printStackTrace();
+		}
 	}
 }

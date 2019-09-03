@@ -39,21 +39,14 @@ public class Lee {
 
 	public static String hablar(String say) {
 		try {
-
 			SynthesizerModeDesc required = new SynthesizerModeDesc();
 			required.setLocale(Locale.ROOT);
-
 			Voice voice = new Voice(null, Voice.AGE_CHILD, Voice.AGE_CHILD, null);
-
 			required.addVoice(voice);
-
 			Synthesizer synth = Central.createSynthesizer(null);
-
 			synth.allocate();
 			synth.resume();
-
 			synth.speakPlainText(say, null);
-
 			synth.waitEngineState(Synthesizer.QUEUE_EMPTY);
 			synth.deallocate();
 

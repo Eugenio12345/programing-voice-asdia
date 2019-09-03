@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.jrichardsz.poc.jsapi.Lee;
 import org.myprogram.command.voice.Programas;
 
 public class Reconocedor extends JFrame implements ActionListener{
@@ -36,6 +37,7 @@ public class Reconocedor extends JFrame implements ActionListener{
 		Reconocedor.setVisible(true);
 		
 	}
+	
 	public Reconocedor() {
 		
 		setLayout(null);
@@ -77,11 +79,12 @@ public class Reconocedor extends JFrame implements ActionListener{
 			//Se configura al reconocedor para que entienda el idioma inglés
 			oreja = Central.createRecognizer(new EngineModeDesc(Locale.ROOT));
 			oreja.allocate();
+			Lee.hablar("Hola, cual es tu nombre");
 			FileReader grammar1 =new FileReader("Programas.txt"); //ruta donde esta el archivo con las Frases
 			RuleGrammar rg = oreja.loadJSGF(grammar1);//Establece la forma en que debe de estar estructurado el archive grammar 
 			rg.setEnabled(true); //accesa al archivo
 			oreja.addResultListener(new Programas());  //Se hace referencia a la clase de escucha del reconocedor
- 
+            
 			for(int i=0;i<=23;i++){
 				System.out.println("");
 			}
@@ -102,14 +105,9 @@ public class Reconocedor extends JFrame implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent event) { 
-
 		if ( (event.getSource() == btn)) {
-			//activ = true;
 			iniciarRec();
 		return;
 		}
-		/*else {
-			salir();	
-		} */
-    }//Termina ActionPerformed
+    }
 }
