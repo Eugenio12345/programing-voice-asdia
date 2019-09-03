@@ -46,17 +46,22 @@ public class Programas extends ResultAdapter {
 			this.prepareCommand(p);
 			break;
 		case "Reproductor":
-			System.out.println("Abriendo Windows Media Player...");
+			System.out.println(Lee.hablar("Abriendo Windows Media Player..."));
 			p = Runtime.getRuntime().exec("cmd.exe /c start wmplayer");
 			this.prepareCommand(p);
 			break;
 		case "Chrome":
-			System.out.println("Abriendo Chrome...");
+			System.out.println(Lee.hablar("Abriendo Chrome..."));
 			p = Runtime.getRuntime().exec("cmd.exe /c start Chrome");
 			this.prepareCommand(p);
 			break;
+		case "YouTube":
+			System.out.println(Lee.hablar("Abriendo YouTube..."));
+			p = Runtime.getRuntime().exec("cmd.exe /c start www.youtube.com");
+			this.prepareCommand(p);
+			break;
 		case "Paint":
-			System.out.println("Abriendo Paint Brush...");
+			System.out.println(Lee.hablar("Abriendo Paint Brush..."));
 			// Se lanza el ejecutable.
 			p = Runtime.getRuntime().exec("cmd.exe /c start pbrush");
 			this.prepareCommand(p);

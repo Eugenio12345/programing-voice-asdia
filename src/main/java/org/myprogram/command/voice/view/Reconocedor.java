@@ -72,14 +72,12 @@ public class Reconocedor extends JFrame implements ActionListener{
 	}
 
 	public void iniciarRec() {
-  
-		JOptionPane.showMessageDialog(null, "Pronuncie Aplicacion a Ejecutar");
-		
+            Lee.hablar("Buenos dias Jefe");	
 			try{
 			//Se configura al reconocedor para que entienda el idioma inglés
 			oreja = Central.createRecognizer(new EngineModeDesc(Locale.ROOT));
 			oreja.allocate();
-			Lee.hablar("Hola, cual es tu nombre");
+			Lee.hablar("Digame, en que le puedo ayudar");
 			FileReader grammar1 =new FileReader("Programas.txt"); //ruta donde esta el archivo con las Frases
 			RuleGrammar rg = oreja.loadJSGF(grammar1);//Establece la forma en que debe de estar estructurado el archive grammar 
 			rg.setEnabled(true); //accesa al archivo
