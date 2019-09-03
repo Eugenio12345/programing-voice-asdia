@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import javax.speech.AudioException;
-import javax.speech.EngineStateError;
 import javax.speech.recognition.Recognizer;
 import javax.speech.recognition.Result;
 import javax.speech.recognition.ResultAdapter;
