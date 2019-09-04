@@ -13,8 +13,7 @@ public class MainAsdia extends JFrame {
 	/**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-      
+    public static void main(String args[]) {     
       ViewAsdia view = new ViewAsdia();
       view.setVisible(true);
     }                  
