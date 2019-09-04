@@ -13,15 +13,11 @@ import javax.speech.recognition.ResultEvent;
 import javax.speech.recognition.ResultToken;
 import javax.speech.recognition.RuleGrammar;
 
-public class ReconocedorVoz extends ResultAdapter implements Runnable {
+public class ReconocedorVoz extends ResultAdapter  {
 	static Recognizer oreja;
 	String palabra;
 	private Acciones acciones;
 	ViewAsdia reconocedor;
-
-	public ReconocedorVoz(ViewAsdia reconocedor) {
-    this.reconocedor = reconocedor;
-	}
 
 	public void iniciarRec() {
 		try {
@@ -32,9 +28,10 @@ public class ReconocedorVoz extends ResultAdapter implements Runnable {
 			RuleGrammar rg = oreja.loadJSGF(grammar1);// Establece la forma en
 			rg.setEnabled(true); // accesa al archivo
 
-			oreja.addResultListener(new ReconocedorVoz(reconocedor));
+			oreja.addResultListener(new ReconocedorVoz());
 			oreja.commitChanges();
 			oreja.requestFocus();
+			oreja.resume();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -56,8 +53,4 @@ public class ReconocedorVoz extends ResultAdapter implements Runnable {
 		}
 	}
 
-	@Override
-	public void run() {
-		this.iniciarRec();
-	}
 }

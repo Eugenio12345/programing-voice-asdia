@@ -14,7 +14,7 @@ public class Acciones {
 		System.out.println("Imprimiendo accion:::::" + programa);
 		Process p = null;
 		switch (programa) {
-		case "por":
+		case "Facebook":
 			System.out.println(Lee.hablar("Abriendo Facebook..."));
 			p = Runtime.getRuntime().exec("cmd.exe /c start Chrome www.facebook.com");
 			this.prepareCommand(p);

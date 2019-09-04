@@ -15,6 +15,5 @@ public class MainAsdia extends JFrame {
      */
     public static void main(String args[]) {     
       ViewAsdia view = new ViewAsdia();
-      view.setVisible(true);
     }                  
 }

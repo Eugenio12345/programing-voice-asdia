@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 
-public class ViewAsdia extends JFrame implements Runnable {
+public class ViewAsdia extends JFrame  {
 
 	/**
 	 * 
@@ -43,8 +43,8 @@ public class ViewAsdia extends JFrame implements Runnable {
 
 	public void initComponents() {
 
-        iniciaPrograma = new javax.swing.JButton();
-        jLabelFondo = new javax.swing.JLabel();
+        iniciaPrograma = new JButton();
+        jLabelFondo = new JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new AbsoluteLayout());
@@ -61,24 +61,20 @@ public class ViewAsdia extends JFrame implements Runnable {
         });
         getContentPane().add(iniciaPrograma, new AbsoluteConstraints(130, 550, 150, -1));
 
-        jLabelFondo.setIcon(new javax.swing.ImageIcon("C:\\opt\\git-hub-projects\\respaldo\\programing-voice-asdia\\src\\main\\resources\\img\\asdia-fondo.gif")); // NOI18N
+        jLabelFondo.setIcon(new ImageIcon("C:\\opt\\git-hub-projects\\respaldo\\programing-voice-asdia\\src\\main\\resources\\img\\asdia-fondo.gif")); // NOI18N
         getContentPane().add(jLabelFondo, new AbsoluteConstraints(0, 0, 403, 625));
 
         pack();
 	}
  
-	private void iniciaProgramaActionPerformed(java.awt.event.ActionEvent evt) {                                               
+	private void iniciaProgramaActionPerformed(ActionEvent evt) {                                               
 		iniciarReconocimieto();
     }                                              
 
 	
 	private void iniciarReconocimieto() {
-		hiloEscucha = new Thread(programas = new ReconocedorVoz(this));
-		hiloEscucha.start();
+		programas = new ReconocedorVoz();
+		programas.iniciarRec();
 	}
 
-	@Override
-	public void run() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
 }
